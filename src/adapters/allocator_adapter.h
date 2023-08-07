@@ -9,7 +9,7 @@ class AllocatorAdapter
 public:
     using value_type = T;
 
-    AllocatorAdapter() = default;
+    AllocatorAdapter() noexcept;
 
     explicit AllocatorAdapter(AllocationStrategy&) noexcept;
 

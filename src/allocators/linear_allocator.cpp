@@ -2,71 +2,78 @@
 
 #include <cassert>
 
-LinearAllocator::LinearAllocator(const std::size_t size_bytes, void* const start)
-    : Allocator(size_bytes, start),
-    m_current{const_cast<void*>(start)}
+template <size_t SIZE_BYTES>
+LinearAllocator<SIZE_BYTES>::LinearAllocator() noexcept
+    : Allocator<SIZE_BYTES>(std::malloc(SIZE_BYTES)),
+    m_current{const_cast<void*>(this->m_start)}
 {}
 
-LinearAllocator::LinearAllocator(LinearAllocator &&other) noexcept
-    : Allocator(std::move(other)),
+template <size_t SIZE_BYTES>
+LinearAllocator<SIZE_BYTES>::LinearAllocator(LinearAllocator<SIZE_BYTES> &&other) noexcept
+    : Allocator<SIZE_BYTES>(std::move(other)),
       m_current{other.m_current}
 {
     // TODO: CHECK
     other.m_current = nullptr;
 }
 
-LinearAllocator::~LinearAllocator() noexcept
+template <size_t SIZE_BYTES>
+LinearAllocator<SIZE_BYTES>::~LinearAllocator() noexcept
 {
     // TODO: check
     clear();
 }
-
-LinearAllocator& LinearAllocator::operator=(LinearAllocator &&other) noexcept
+template <size_t SIZE_BYTES>
+LinearAllocator<SIZE_BYTES>& LinearAllocator<SIZE_BYTES>::operator=(LinearAllocator<SIZE_BYTES> &&other) noexcept
 {
     m_current = other.m_current;
-    Allocator::operator=(std::move(other));
+    Allocator<SIZE_BYTES>::operator=(std::move(other));
     other.m_current = nullptr;
     return *this;
 }
 
-void* LinearAllocator::allocate(const std::size_t &size, const std::uintptr_t &alignment)
+template <size_t SIZE_BYTES>
+void* LinearAllocator<SIZE_BYTES>::allocate(const std::size_t &size, const std::uintptr_t &alignment)
 {
     assert(size > 0 && alignment > 0);
 
     auto adjustment = align_forward_adjustment(m_current, alignment);
 
-    if (m_used_bytes + adjustment + size > m_size) { throw std::bad_alloc(); }
+    if (this->m_used_bytes + adjustment + size > this->m_size) { throw std::bad_alloc(); }
 
     auto aligned_address = ptr_add(m_current, adjustment);
     m_current = ptr_add(aligned_address, size);
 
-    m_used_bytes = reinterpret_cast<std::uintptr_t>(m_current)
-        - reinterpret_cast<std::uintptr_t>(m_start);
+    this->m_used_bytes = reinterpret_cast<std::uintptr_t>(m_current)
+        - reinterpret_cast<std::uintptr_t>(this->m_start);
 
-    ++m_allocations_count;
+    ++this->m_allocations_count;
 
     return aligned_address;
 }
 
-void LinearAllocator::deallocate([[maybe_unused]] void* const ptr) noexcept
+template <size_t SIZE_BYTES>
+void LinearAllocator<SIZE_BYTES>::deallocate([[maybe_unused]] void* const ptr) noexcept
 {
     // you can't free from a linear allocator
 }
 
-void LinearAllocator::rewind(void* const mark) noexcept
+template <size_t SIZE_BYTES>
+void LinearAllocator<SIZE_BYTES>::rewind(void* const mark) noexcept
 {
-    assert(m_current >= mark && m_start <= mark);
+    assert(m_current >= mark && this->m_start <= mark);
 
     m_current = mark;
 
-    m_used_bytes = reinterpret_cast<std::uintptr_t>(m_current)
-        - reinterpret_cast<std::uintptr_t>(m_start);
+    this->m_used_bytes = reinterpret_cast<std::uintptr_t>(m_current)
+        - reinterpret_cast<std::uintptr_t>(this->m_start);
 }
 
-void LinearAllocator::clear() noexcept
+template <size_t SIZE_BYTES>
+void LinearAllocator<SIZE_BYTES>::clear() noexcept
 {
-    m_used_bytes = 0;
-    m_allocations_count = 0;
-    m_current = const_cast<void*>(m_start);
+    this->m_used_bytes = 0;
+    this->m_allocations_count = 0;
+    m_current = const_cast<void*>(this->m_start);
 }
 

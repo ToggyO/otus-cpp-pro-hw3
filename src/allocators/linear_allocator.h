@@ -4,10 +4,11 @@
 
 #include "allocator.h"
 
-class LinearAllocator : public Allocator
+template <size_t SIZE_BYTES>
+class LinearAllocator : public Allocator<SIZE_BYTES>
 {
 public:
-    LinearAllocator(const std::size_t, void* const);
+    LinearAllocator() noexcept;
 
     LinearAllocator(const LinearAllocator&) = delete;
     LinearAllocator(LinearAllocator&&) noexcept;

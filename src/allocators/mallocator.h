@@ -4,7 +4,7 @@
 class Mallocator
 {
 public:
-
+    Mallocator();
 };
 
 

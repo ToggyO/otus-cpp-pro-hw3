@@ -2,16 +2,16 @@
 
 #include <cassert>
 
-Allocator::Allocator(const std::size_t size_bytes, void* const start)
-    : m_size{size_bytes},
+template <size_t SIZE_BYTES>
+Allocator<SIZE_BYTES>::Allocator(void* const start)
+    : m_size{SIZE_BYTES},
     m_used_bytes{0},
     m_allocations_count{0},
     m_start{start}
-{
-    assert(size_bytes > 0);
-}
+{}
 
-Allocator::Allocator(Allocator &&other) noexcept
+template <size_t SIZE_BYTES>
+Allocator<SIZE_BYTES>::Allocator(Allocator &&other) noexcept
     : m_size{other.m_size},
     m_used_bytes{other.m_used_bytes},
     m_allocations_count{other.m_allocations_count},
@@ -23,7 +23,8 @@ Allocator::Allocator(Allocator &&other) noexcept
     other.m_start = nullptr;
 }
 
-Allocator& Allocator::operator=(Allocator &&other) noexcept
+template <size_t SIZE_BYTES>
+Allocator<SIZE_BYTES>& Allocator<SIZE_BYTES>::operator=(Allocator<SIZE_BYTES> &&other) noexcept
 {
     m_size = other.m_size;
     m_used_bytes = other.m_used_bytes;
@@ -38,7 +39,8 @@ Allocator& Allocator::operator=(Allocator &&other) noexcept
     return *this;
 }
 
-Allocator::~Allocator() noexcept
+template <size_t SIZE_BYTES>
+Allocator<SIZE_BYTES>::~Allocator() noexcept
 {
     // TODO: CHECK!!!!
     assert(m_allocations_count == 0 && m_used_bytes == 0);

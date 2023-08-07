@@ -4,10 +4,12 @@
 #include <cstdint>
 #include <cstdlib>
 
+template <size_t SIZE_BYTES>
 class Allocator
 {
+    static_assert(SIZE_BYTES > 0);
 public:
-    Allocator(const std::size_t, void* const);
+    explicit Allocator(void* start);
 
     Allocator(const Allocator&) = delete;
     Allocator(Allocator&&) noexcept;
@@ -21,6 +23,7 @@ public:
 
     virtual void deallocate(void* const ptr) = 0;
 
+    [[nodiscard]]
     const void* get_start() const noexcept { return m_start; }
 
 protected:

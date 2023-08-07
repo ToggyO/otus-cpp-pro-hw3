@@ -8,10 +8,11 @@
 template <typename T, class Allocator>
 using Vector = std::vector<T, AllocatorAdapter<T, Allocator>>;
 
-using MapAdapterAllocator = AllocatorAdapter<std::pair<const int, long>, LinearAllocator>;
+template <size_t SIZE_BYES>
+using MapAdapterAllocator = AllocatorAdapter<std::pair<const int, long>, LinearAllocator<SIZE_BYES>>;
 
-template <typename T, typename U, class Compare, class Allocator>
-using Map = std::map<T, U, Compare, MapAdapterAllocator>;
+template <typename T, typename U, class Compare, size_t SIZE_BYES>
+using Map = std::map<T, U, Compare, MapAdapterAllocator<SIZE_BYES>>;
 
 int main()
 {
@@ -20,8 +21,8 @@ int main()
     std::cout << "ALLOCATOR!" << std::endl;
 
     const std::size_t memory_size = 20000;
-    void* memory = std::malloc(memory_size);
-    LinearAllocator allocator(memory_size, memory);
+//    void* memory = std::malloc(memory_size);
+//    LinearAllocator<memory_size> allocator;
 
 
 
@@ -37,8 +38,8 @@ int main()
     //
 
     // Map
-    MapAdapterAllocator m_adapter(allocator);
-    std::map<int, long, std::less<>, MapAdapterAllocator> m(m_adapter);
+//    MapAdapterAllocator<memory_size> m_adapter(allocator);
+    std::map<int, long, std::less<>, MapAdapterAllocator<memory_size>> m;
     m[4] = 3423421343;
     m[1] = 1332423434;
     //
