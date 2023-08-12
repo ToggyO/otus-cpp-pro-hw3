@@ -1,2 +1,0 @@
-/usr/bin/ar qc libotus-cpp-pro-hw3_lib.a CMakeFiles/otus-cpp-pro-hw3_lib.dir/allocators/mallocator.cpp.o CMakeFiles/otus-cpp-pro-hw3_lib.dir/main.cpp.o CMakeFiles/otus-cpp-pro-hw3_lib.dir/utils/utils.cpp.o
-/usr/bin/ranlib libotus-cpp-pro-hw3_lib.a

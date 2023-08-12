@@ -20,7 +20,7 @@ public:
 
     virtual void* allocate(const std::size_t&, const std::uintptr_t& = sizeof(std::uintptr_t)) override;
 
-    void deallocate(void* const) override final;
+    void deallocate(void* const) override;
 
     virtual void rewind(void* const) noexcept;
 

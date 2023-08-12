@@ -1,9 +1,0 @@
-/home/oleg-togushakov/Projects/plusplus/otus-pro/hw/otus-cpp-pro-hw3/build/CMakeFiles/edit_cache.dir
-/home/oleg-togushakov/Projects/plusplus/otus-pro/hw/otus-cpp-pro-hw3/build/CMakeFiles/rebuild_cache.dir
-/home/oleg-togushakov/Projects/plusplus/otus-pro/hw/otus-cpp-pro-hw3/build/src/CMakeFiles/otus-cpp-pro-hw3.dir
-/home/oleg-togushakov/Projects/plusplus/otus-pro/hw/otus-cpp-pro-hw3/build/src/CMakeFiles/otus-cpp-pro-hw3_lib.dir
-/home/oleg-togushakov/Projects/plusplus/otus-pro/hw/otus-cpp-pro-hw3/build/src/CMakeFiles/edit_cache.dir
-/home/oleg-togushakov/Projects/plusplus/otus-pro/hw/otus-cpp-pro-hw3/build/src/CMakeFiles/rebuild_cache.dir
-/home/oleg-togushakov/Projects/plusplus/otus-pro/hw/otus-cpp-pro-hw3/build/tests/CMakeFiles/tests.dir
-/home/oleg-togushakov/Projects/plusplus/otus-pro/hw/otus-cpp-pro-hw3/build/tests/CMakeFiles/edit_cache.dir
-/home/oleg-togushakov/Projects/plusplus/otus-pro/hw/otus-cpp-pro-hw3/build/tests/CMakeFiles/rebuild_cache.dir

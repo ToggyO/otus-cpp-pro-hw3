@@ -11,15 +11,6 @@ class Mallocator
 {
 public:
     // The following will be the same for virtually all allocators.
-    // TODO: remove
-//    typedef T value_type;
-//    typedef T * pointer;
-//    typedef const T * const_pointer;
-//    typedef T& reference;
-//    typedef const T& const_reference;
-//    typedef size_t size_type;
-//    typedef ptrdiff_t difference_type;
-
     using value_type = T;
 
     // The following must be the same for all allocators.
@@ -39,49 +30,19 @@ public:
 
     // The following will be different for each allocator.
     [[nodiscard]]
-    T* allocate(const size_t &n, [[maybe_unused]] const std::uintptr_t &alignment)
-    {
-        // The return value of allocate(0) is unspecified.
-        // Mallocator returns nullptr in order to avoid depending
-        // on malloc(0)’s implementation-defined behavior
-        // (the implementation can define malloc(0) to return NULL,
-        // in which case the bad_alloc check below would fire).
-        // All allocators can return NULL in this case.
-        if (n == 0) { return nullptr; }
+    T* allocate(const size_t&, [[maybe_unused]] const std::uintptr_t&);
 
-        // All allocators should contain an integer overflow check.
-        // The Standardization Committee recommends that std::length_error
-        // be thrown in the case of integer overflow.
-        if (n > max_size())
-        {
-            throw std::length_error("Mallocator<T>::allocate() – Integer overflow.");
-        }
-
-        void * const pv = malloc(n * sizeof(T));
-
-        // Allocators should throw std::bad_alloc in the case of memory allocation failure.
-        if (pv == nullptr) { throw std::bad_alloc(); }
-
-        return static_cast<T *>(pv);
-    }
-
-    void deallocate(T * const p, [[maybe_unused]] const size_t n) const { free(p); }
+    void deallocate(void* const p) const { free(p); }
 
     // The following will be the same for all allocators that ignore hints.
-    template <typename U> T * allocate(const size_t n, [[maybe_unused]] const U * const hint) const
-    {
-        return allocate(n);
-    }
+    template <typename U>
+    T* allocate(const size_t&, [[maybe_unused]] const U *const) const;
 
-    void construct(T * const p, const T& t) const
-    {
-        void * const pv = static_cast<void *>(p);
-        new (pv) T(t);
-    }
+    void construct(T * const p, const T& t) const;
 
     void destroy(T * const p) const; // Defined below.
 
-    bool owns(void* const ptr) { return true; }
+    bool owns(void* const ptr) const { return true; }
 
     T* address(T& r) const { return &r; }
 
@@ -89,12 +50,7 @@ public:
     const T * address(const T& s) const { return &s; }
 
     [[nodiscard]]
-    size_t max_size() const
-    {
-        // The following has been carefully written to be independent of
-        // the definition of size_t and to avoid signed/unsigned warnings.
-        return (static_cast<size_t>(0) - static_cast<size_t>(1)) / sizeof(T);
-    }
+    size_t max_size() const;
 
     // Returns true if and only if storage allocated from *this
     // can be deallocated from other, and vice versa.
@@ -125,3 +81,5 @@ template <typename T>
 void Mallocator<T>::destroy(T * const p) const {
     p->~T();
 }
+
+#include "mallocator.ipp"

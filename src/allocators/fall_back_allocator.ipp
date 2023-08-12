@@ -11,14 +11,14 @@ void* FallBackAllocator<Primary, Fallback>::allocate(const std::size_t &size, co
 }
 
 template <class Primary, class Fallback>
-void FallBackAllocator<Primary, Fallback>::deallocate(void* const ptr) const noexcept
+void FallBackAllocator<Primary, Fallback>::deallocate(void* const ptr) noexcept
 {
     if (Primary::owns(ptr))
     {
-        Primary::dealocate(ptr);
+        Primary::deallocate(ptr);
     }
     else
     {
-        Fallback::dealocate(ptr);
+        Fallback::deallocate(ptr);
     }
 }

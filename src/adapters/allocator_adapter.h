@@ -1,6 +1,6 @@
 #pragma once
 
-#include <type_traits>
+#include <type_traits> // is_same
 
 template <typename T, class AllocationStrategy>
 class AllocatorAdapter

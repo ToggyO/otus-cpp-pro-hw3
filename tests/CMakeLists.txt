@@ -8,7 +8,8 @@ enable_testing()
 
 file(GLOB_RECURSE TEST_SOURCES LIST_DIRECTORIES false *.h *.cpp)
 
-add_executable(tests ${TEST_SOURCES})
+add_executable(tests ${TEST_SOURCES}
+        test_common.cpp)
 set_target_properties(tests PROPERTIES
         CXX_STANDARD 17
         CXX_STANDARD_REQUIRED ON

@@ -1,8 +1,9 @@
 #pragma once
 
-#include <cstddef>
-#include <cstdint>
-#include <type_traits>
+// TODO: remove
+//#include <cstddef>
+//#include <cstdint>
+//#include <type_traits>
 
 template <class Primary, class Fallback>
 class FallBackAllocator : private Primary, private Fallback
@@ -11,7 +12,7 @@ class FallBackAllocator : private Primary, private Fallback
 public:
     void* allocate(const std::size_t &size, const std::uintptr_t &alignment);
 
-    void deallocate(void* const) const noexcept;
+    void deallocate(void* const) noexcept;
 };
 
 template <class Primary, class Fallback>

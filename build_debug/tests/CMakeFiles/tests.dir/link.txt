@@ -1,1 +1,0 @@
-/usr/bin/g++ -g CMakeFiles/tests.dir/test_linear_allocator.cpp.o -o tests  /usr/lib/x86_64-linux-gnu/libgtest.a /usr/lib/x86_64-linux-gnu/libgtest_main.a ../src/libotus-cpp-pro-hw3_lib.a /usr/lib/x86_64-linux-gnu/libgtest.a 

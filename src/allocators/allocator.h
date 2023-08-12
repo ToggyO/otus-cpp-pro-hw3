@@ -1,8 +1,9 @@
 #pragma once
 
-#include <cstddef>
-#include <cstdint>
-#include <cstdlib>
+// TODO: check
+//#include <cstddef>
+//#include <cstdint>
+//#include <cstdlib>
 
 #include "../utils/utils.h"
 
@@ -25,7 +26,7 @@ public:
 
     virtual void deallocate(void* const) = 0;
 
-    virtual bool owns(void* const ptr) { return (m_start <= ptr) && (ptr <= (ptr_add(m_start, SIZE_BYTES))); }
+    virtual bool owns(void* const ptr) const { return (m_start <= ptr) && (ptr <= (ptr_add(m_start, SIZE_BYTES))); }
 
     [[nodiscard]]
     const std::size_t& get_size() const noexcept { return m_size; }
