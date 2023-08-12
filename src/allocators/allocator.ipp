@@ -1,5 +1,3 @@
-#include "allocator.h"
-
 #include <cassert>
 
 template <size_t SIZE_BYTES>

@@ -20,34 +20,30 @@ public:
 
     virtual void* allocate(const std::size_t&, const std::uintptr_t& = sizeof(std::uintptr_t)) override;
 
-    virtual void deallocate(void* const) noexcept override final;
+    void deallocate(void* const) override final;
 
     virtual void rewind(void* const) noexcept;
 
     virtual void clear() noexcept;
 
+    [[nodiscard]]
+    const void* get_current() const noexcept { return m_current; }
+
 protected:
     void* m_current;
 };
 
-
-// TODO: вынести, зарефачить
-inline std::size_t align_forward_adjustment(const void *const ptr, const std::size_t &alignment) noexcept
+template <size_t SIZE_BYTES>
+bool operator==(const LinearAllocator<SIZE_BYTES> &lhs, const LinearAllocator<SIZE_BYTES> &rhs)
 {
-    const auto uiptr = reinterpret_cast<std::uintptr_t>(ptr);
-
-    const auto k = uiptr - 1u;
-    const auto l = k + alignment;
-    const auto negative_alignment = -alignment;
-
-    const auto aligned = l & negative_alignment;
-
-    auto p = aligned - uiptr;
-    return p;
+    return (lhs.get_current() == rhs.get_current())
+        && (static_cast<Allocator<SIZE_BYTES>>(lhs) == static_cast<Allocator<SIZE_BYTES>>(rhs));
 }
 
-// TODO: вынести
-inline void* ptr_add(const void *const ptr, const std::uintptr_t &amount) noexcept
+template <size_t SIZE_BYTES>
+bool operator!=(const LinearAllocator<SIZE_BYTES> &lhs, const LinearAllocator<SIZE_BYTES> &rhs)
 {
-    return reinterpret_cast<void*>(reinterpret_cast<std::uintptr_t>(ptr) + amount);
+    return !(lhs == rhs);
 }
+
+#include "linear_allocator.ipp"

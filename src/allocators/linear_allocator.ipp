@@ -1,7 +1,3 @@
-#include "linear_allocator.h"
-
-#include <cassert>
-
 template <size_t SIZE_BYTES>
 LinearAllocator<SIZE_BYTES>::LinearAllocator() noexcept
     : Allocator<SIZE_BYTES>(std::malloc(SIZE_BYTES)),
@@ -23,6 +19,7 @@ LinearAllocator<SIZE_BYTES>::~LinearAllocator() noexcept
     // TODO: check
     clear();
 }
+
 template <size_t SIZE_BYTES>
 LinearAllocator<SIZE_BYTES>& LinearAllocator<SIZE_BYTES>::operator=(LinearAllocator<SIZE_BYTES> &&other) noexcept
 {
@@ -53,7 +50,7 @@ void* LinearAllocator<SIZE_BYTES>::allocate(const std::size_t &size, const std::
 }
 
 template <size_t SIZE_BYTES>
-void LinearAllocator<SIZE_BYTES>::deallocate([[maybe_unused]] void* const ptr) noexcept
+void LinearAllocator<SIZE_BYTES>::deallocate([[maybe_unused]] void* const ptr)
 {
     // you can't free from a linear allocator
 }

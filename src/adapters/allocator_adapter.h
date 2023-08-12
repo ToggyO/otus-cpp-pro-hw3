@@ -9,7 +9,7 @@ class AllocatorAdapter
 public:
     using value_type = T;
 
-    AllocatorAdapter() noexcept;
+    AllocatorAdapter() = delete;
 
     explicit AllocatorAdapter(AllocationStrategy&) noexcept;
 
@@ -39,16 +39,13 @@ private:
 template<class T, class U, class AllocationStrategy>
 bool operator==(const AllocatorAdapter<T, AllocationStrategy> &lhs, const AllocatorAdapter<U, AllocationStrategy> &rhs)
 {
-    // TODO: implement me
-    return true;
+    return lhs.get_strategy() == rhs.get_strategy();
 }
 
 template<class T, class U, class AllocationStrategy>
 bool operator!=(const AllocatorAdapter<T, AllocationStrategy> &lhs, const AllocatorAdapter<U, AllocationStrategy> &rhs)
 {
-//    return !(lhs == rhs);
-    // TODO: implement me
-    return false;
+    return !(lhs == rhs);
 }
 
 #include "allocator_adapter.ipp"
