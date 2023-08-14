@@ -12,8 +12,11 @@ AllocatorAdapter<T, AllocationStrategy>::AllocatorAdapter(const AllocatorAdapter
 template <typename T, class AllocationStrategy>
 T* AllocatorAdapter<T, AllocationStrategy>::allocate(std::size_t n)
 {
-    // TODO: remove
-//    assert(m_allocation_strategy && "Not initialized allocation strategy");
+#ifdef DEBUG
+    auto type_id = typeid(T).name();
+    std::cout << "Allocating " << n << " elements of type '" << type_id << "'" << std::endl;
+    std::cout << "sizeof(" << type_id << ") = " << sizeof(T) << " bytes" << std::endl;
+#endif
     return static_cast<T*>(
             const_cast<AllocationStrategy&>(m_allocation_strategy).allocate(n * sizeof(T), alignof(T)));
 }
@@ -21,7 +24,10 @@ T* AllocatorAdapter<T, AllocationStrategy>::allocate(std::size_t n)
 template <typename T, class AllocationStrategy>
 void AllocatorAdapter<T, AllocationStrategy>::deallocate(T* ptr, [[maybe_unused]] std::size_t n)
 {
-    // TODO: remove
-//    assert(m_allocation_strategy && "Not initialized allocation strategy");
+#ifdef DEBUG
+    auto type_id = typeid(T).name();
+    std::cout << "Deallocating element of type '" << type_id << "' " << std::endl;
+    std::cout << "Memory address = " << std::hex << ptr << std::endl;
+#endif
     const_cast<AllocationStrategy&>(m_allocation_strategy).deallocate(ptr);
 }

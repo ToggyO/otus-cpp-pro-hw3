@@ -1,10 +1,5 @@
 #pragma once
 
-// TODO: remove
-//#include <cstddef>
-//#include <cstdint>
-//#include <type_traits>
-
 template <class Primary, class Fallback>
 class FallBackAllocator : private Primary, private Fallback
 {
@@ -13,6 +8,8 @@ public:
     void* allocate(const std::size_t &size, const std::uintptr_t &alignment);
 
     void deallocate(void* const) noexcept;
+
+    bool owns(void* const ptr) const;
 };
 
 template <class Primary, class Fallback>
@@ -27,4 +24,4 @@ bool operator!=(const FallBackAllocator<Primary, Fallback> &lhs, const FallBackA
     return false;
 }
 
-#include "fall_back_allocator.ipp"
+#include "fall_back_allocator.inl"

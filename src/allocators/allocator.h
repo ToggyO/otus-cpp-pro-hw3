@@ -1,10 +1,5 @@
 #pragma once
 
-// TODO: check
-//#include <cstddef>
-//#include <cstdint>
-//#include <cstdlib>
-
 #include "../utils/utils.h"
 
 template <size_t SIZE_BYTES>
@@ -19,7 +14,7 @@ public:
 
     virtual ~Allocator() noexcept;
 
-    Allocator& operator=(Allocator&) = delete;
+    Allocator& operator=(const Allocator&) = delete;
     Allocator& operator=(Allocator&&) noexcept;
 
     virtual void* allocate(const std::size_t&, const std::uintptr_t& = sizeof(std::uintptr_t)) = 0;
@@ -51,10 +46,11 @@ protected:
 template <size_t SIZE_BYTES>
 bool operator==(const Allocator<SIZE_BYTES> &lhs, const Allocator<SIZE_BYTES> &rhs)
 {
-    return lhs.get_start() == rhs.get_start()
+    auto result = lhs.get_start() == rhs.get_start()
         && lhs.get_size() == rhs.get_size()
         && lhs.get_used_bytes() == rhs.get_used_bytes()
         && lhs.get_allocations_count() == rhs.get_allocations_count();
+    return result;
 }
 
 template <size_t SIZE_BYTES>
@@ -63,4 +59,4 @@ bool operator!=(const Allocator<SIZE_BYTES> &lhs, const Allocator<SIZE_BYTES> &r
     return !(lhs == rhs);
 }
 
-#include "allocator.ipp"
+#include "allocator.inl"

@@ -2,11 +2,40 @@
 
 #include "allocators/linear_allocator.h"
 
-// TODO: тесты констуркторов, тесты операторов сравнения
-TEST(LinearAllocatorTest, AllocationAndProperAlignment) {
-    int alignment = 8;
-    const std::size_t mem_size_bytes = 100;
+static constexpr int alignment = 8;
+static constexpr std::size_t mem_size_bytes = 100;
 
+TEST(LinearAllocatorTest, Ctors) {
+    LinearAllocator<mem_size_bytes> allocator;
+    const auto& used_bytes = allocator.get_used_bytes();
+
+    allocator.allocate(4, alignment);
+    EXPECT_EQ(used_bytes, 4);
+
+    LinearAllocator<mem_size_bytes> allocator1(std::move(allocator));
+    EXPECT_EQ(used_bytes, 4);
+    EXPECT_EQ(allocator1.get_size(), 100);
+    EXPECT_EQ(allocator1.get_allocations_count(), 1);
+
+    LinearAllocator<mem_size_bytes> allocator2 = std::move(allocator1); // TODO: вызывается move ctor ((((((((999
+    EXPECT_EQ(used_bytes, 4);
+    EXPECT_EQ(allocator2.get_size(), 100);
+    EXPECT_EQ(allocator2.get_allocations_count(), 1);
+}
+
+TEST(LinearAllocatorTest, EqualityOpeartors) {
+    LinearAllocator<mem_size_bytes> allocator;
+    allocator.allocate(4, alignment);
+
+    const auto r = allocator.get_start();
+    LinearAllocator<mem_size_bytes> allocator1(const_cast<void* const>(r));
+    allocator1.allocate(4, alignment);
+
+    EXPECT_TRUE(allocator == allocator1);
+    EXPECT_FALSE(allocator != allocator1);
+}
+
+TEST(LinearAllocatorTest, AllocationAndProperAlignment) {
     LinearAllocator<mem_size_bytes> allocator;
     const auto& used_bytes = allocator.get_used_bytes();
 
@@ -29,9 +58,6 @@ TEST(LinearAllocatorTest, AllocationAndProperAlignment) {
 }
 
 TEST(LinearAllocatorTest, TestOwns) {
-    int alignment = 8;
-    const std::size_t mem_size_bytes = 100;
-
     LinearAllocator<mem_size_bytes> allocator;
 
     void* ptr = allocator.allocate(4, alignment);
