@@ -14,7 +14,8 @@ public:
     using value_type = T;
 
     // The following must be the same for all allocators.
-    template <typename U> struct rebind { typedef Mallocator<U> other;  };
+    template <typename U>
+    struct rebind { typedef Mallocator<U> other;  };
 
     // Default constructor, copy constructor, rebinding constructor, and destructor.
     // Empty for stateless allocators.

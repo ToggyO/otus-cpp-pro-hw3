@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream> // cout
 #include <type_traits> // is_same
 
 template <typename T, class AllocationStrategy>
@@ -8,6 +9,11 @@ class AllocatorAdapter
     static_assert(!std::is_same<T, void>(), "Void is noty allowed as allocation type");
 public:
     using value_type = T;
+    using pointer = T*;
+    using size_type = size_t;
+
+    template <typename U>
+    struct rebind { using other = AllocatorAdapter<U, AllocationStrategy>;  };
 
     AllocatorAdapter() = delete;
 
@@ -18,17 +24,9 @@ public:
 
     ~AllocatorAdapter() = default;
 
-    // TODO: дополить copy/move
-//    AllocatorAdapter(const AllocatorAdapter&) noexcept = delete;
-//    AllocatorAdapter(AllocatorAdapter&&) noexcept = delete;
-//
-//    AllocatorAdapter<T, AllocationStrategy>& operator=(const AllocatorAdapter&) = delete;
-//    AllocatorAdapter<T, AllocationStrategy>& operator=(AllocatorAdapter&&) = delete;
-    //
+    pointer allocate(size_type);
 
-    T* allocate(std::size_t);
-
-    void deallocate(T*, std::size_t);
+    void deallocate(pointer, size_type);
 
     const AllocationStrategy& get_strategy() const { return m_allocation_strategy; }
 
@@ -48,4 +46,4 @@ bool operator!=(const AllocatorAdapter<T, AllocationStrategy> &lhs, const Alloca
     return !(lhs == rhs);
 }
 
-#include "allocator_adapter.ipp"
+#include "allocator_adapter.inl"
