@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/run_alloc.dir/allocators/allocator.cpp.o CMakeFiles/run_alloc.dir/allocators/linear_allocator.cpp.o CMakeFiles/run_alloc.dir/main.cpp.o -o run_alloc 
