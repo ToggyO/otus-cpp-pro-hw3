@@ -1,5 +1,0 @@
-# ninja log v5
-0	40	1690660642030173178	src/CMakeFiles/run_alloc.dir/allocators/allocator.cpp.o	718e53be772cf14a
-0	248	1690660642238172713	src/CMakeFiles/run_alloc.dir/allocators/linear_allocator.cpp.o	7fcb1d1074801e83
-1	460	1690660642450172238	src/CMakeFiles/run_alloc.dir/main.cpp.o	4576098931a61972
-461	533	1690660642522172076	src/run_alloc	da67aa80c9caa3a2

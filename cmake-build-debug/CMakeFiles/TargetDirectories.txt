@@ -1,7 +1,0 @@
-/home/oleg-togushakov/Projects/plusplus/otus-pro/hw/otus-cpp-pro-hw3/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/oleg-togushakov/Projects/plusplus/otus-pro/hw/otus-cpp-pro-hw3/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/oleg-togushakov/Projects/plusplus/otus-pro/hw/otus-cpp-pro-hw3/cmake-build-debug/src/CMakeFiles/run_alloc.dir
-/home/oleg-togushakov/Projects/plusplus/otus-pro/hw/otus-cpp-pro-hw3/cmake-build-debug/src/CMakeFiles/edit_cache.dir
-/home/oleg-togushakov/Projects/plusplus/otus-pro/hw/otus-cpp-pro-hw3/cmake-build-debug/src/CMakeFiles/rebuild_cache.dir
-/home/oleg-togushakov/Projects/plusplus/otus-pro/hw/otus-cpp-pro-hw3/cmake-build-debug/tests/CMakeFiles/edit_cache.dir
-/home/oleg-togushakov/Projects/plusplus/otus-pro/hw/otus-cpp-pro-hw3/cmake-build-debug/tests/CMakeFiles/rebuild_cache.dir
