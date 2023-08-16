@@ -1,6 +1,6 @@
 template <class T, class Allocator>
 MyVector<T, Allocator>::MyVector(const Allocator &allocator) noexcept
-    : alloc{allocator}
+    : alloc{allocator}, m_data((T*)std::malloc(0))
 {}
 
 template <class T, class Allocator>
@@ -15,7 +15,6 @@ void MyVector<T, Allocator>::push_back(const T& x)
         allocator_traits::deallocate(alloc, newData, m_capacity);
     }
 
-    auto l = m_data + m_size * sizeof(T);
-    allocator_traits::construct(alloc, l, x);
+    allocator_traits::construct(alloc, m_data + m_size, x);
     ++m_size;
 }

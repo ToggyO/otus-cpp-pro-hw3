@@ -1,12 +1,23 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(otus-cpp-pro-hw3)
+set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
+set(PROJECT_VERSION 0.0.${PATCH_VERSION})
+set(INSTALL_TARGET allocator-test CACHE INTERNAL "")
+
+project(allocator VERSION ${PROJECT_VERSION})
 
 if (CMAKE_BUILD_TYPE MATCHES Debug)
     add_definitions(-DDEBUG)
 endif()
 
-include_directories(src)
-
 add_subdirectory(src)
 add_subdirectory(tests)
+
+install(TARGETS ${INSTALL_TARGET} RUNTIME DESTINATION bin)
+
+set(CPACK_GENERATOR DEB)
+set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
+set(CPACK_PACKAGE_CONTACT togushakov@gmail.com)
+include(CPack)

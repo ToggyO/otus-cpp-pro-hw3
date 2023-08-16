@@ -3,7 +3,7 @@
 template <class Primary, class Fallback>
 class FallBackAllocator : private Primary, private Fallback
 {
-//    static_assert(!traits); TODO: проверка, что разные базовые типы
+//    static_assert(!traits); TODO: в будущем сделать проверку, что шаблонные аргументы имеют разные базовые типы
 public:
     void* allocate(const std::size_t &size, const std::uintptr_t &alignment);
 

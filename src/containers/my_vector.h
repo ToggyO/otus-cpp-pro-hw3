@@ -27,6 +27,12 @@ public:
 
         iterator operator++()
         {
+            current++;
+            return *this;
+        }
+
+        iterator operator++(int)
+        {
             return iterator(current++);
         }
 
