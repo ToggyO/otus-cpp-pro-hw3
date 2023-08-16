@@ -1,6 +1,7 @@
 #pragma once
 
-#include <type_traits>
+#include <iostream> // cout
+#include <type_traits> // is_same
 
 template <typename T, class AllocationStrategy>
 class AllocatorAdapter
@@ -8,8 +9,13 @@ class AllocatorAdapter
     static_assert(!std::is_same<T, void>(), "Void is noty allowed as allocation type");
 public:
     using value_type = T;
+    using pointer = T*;
+    using size_type = size_t;
 
-    AllocatorAdapter() = default;
+    template <typename U>
+    struct rebind { using other = AllocatorAdapter<U, AllocationStrategy>;  };
+
+    AllocatorAdapter() = delete;
 
     explicit AllocatorAdapter(AllocationStrategy&) noexcept;
 
@@ -18,17 +24,9 @@ public:
 
     ~AllocatorAdapter() = default;
 
-    // TODO: дополить copy/move
-//    AllocatorAdapter(const AllocatorAdapter&) noexcept = delete;
-//    AllocatorAdapter(AllocatorAdapter&&) noexcept = delete;
-//
-//    AllocatorAdapter<T, AllocationStrategy>& operator=(const AllocatorAdapter&) = delete;
-//    AllocatorAdapter<T, AllocationStrategy>& operator=(AllocatorAdapter&&) = delete;
-    //
+    pointer allocate(size_type);
 
-    T* allocate(std::size_t);
-
-    void deallocate(T*, std::size_t);
+    void deallocate(pointer, size_type);
 
     const AllocationStrategy& get_strategy() const { return m_allocation_strategy; }
 
@@ -39,16 +37,13 @@ private:
 template<class T, class U, class AllocationStrategy>
 bool operator==(const AllocatorAdapter<T, AllocationStrategy> &lhs, const AllocatorAdapter<U, AllocationStrategy> &rhs)
 {
-    // TODO: implement me
-    return true;
+    return lhs.get_strategy() == rhs.get_strategy();
 }
 
 template<class T, class U, class AllocationStrategy>
 bool operator!=(const AllocatorAdapter<T, AllocationStrategy> &lhs, const AllocatorAdapter<U, AllocationStrategy> &rhs)
 {
-//    return !(lhs == rhs);
-    // TODO: implement me
-    return false;
+    return !(lhs == rhs);
 }
 
-#include "allocator_adapter.ipp"
+#include "allocator_adapter.inl"

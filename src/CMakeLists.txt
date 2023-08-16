@@ -1,12 +1,14 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(alloc_runner)
+project(allocator.src)
 
-file(GLOB SOURCES *.cpp allocators/*.cpp allocators/*.h adapters/*.cpp adapters/*.h)
+set(ALLOCATOR_LIB_BINARY ${PROJECT_NAME} CACHE INTERNAL "")
 
-add_executable(run_alloc ${SOURCES})
+file(GLOB_RECURSE SOURCES LIST_DIRECTORIES true *.h *.cpp)
 
-set_target_properties(run_alloc PROPERTIES
+add_library(${ALLOCATOR_LIB_BINARY} STATIC ${SOURCES})
+
+set_target_properties(${ALLOCATOR_LIB_BINARY} PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
 )
