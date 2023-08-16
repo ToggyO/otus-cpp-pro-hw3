@@ -42,5 +42,5 @@ Allocator<SIZE_BYTES>& Allocator<SIZE_BYTES>::operator=(Allocator<SIZE_BYTES> &&
 template <size_t SIZE_BYTES>
 Allocator<SIZE_BYTES>::~Allocator() noexcept
 {
-    assert(m_allocations_count == 0 && m_used_bytes == 0); // TODO: check
+    assert(m_allocations_count == 0 && m_used_bytes == 0);
 }

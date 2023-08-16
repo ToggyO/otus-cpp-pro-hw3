@@ -80,7 +80,7 @@ TEST(TestHW3, TestCustomVectorWithStdAllocator)
     MyVector<int, AllocatorAdapter<int, FallBackAllocator<LinearAllocator<mem_size_bytes>, Mallocator<int>>>> v(ad);
     for (int i = 0; i < 10; i++)
     {
-        v.push_back(i);
+        v.push_back(factorial(i));
     }
 
     print_vector(v);

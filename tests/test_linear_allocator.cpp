@@ -7,18 +7,19 @@ static constexpr std::size_t mem_size_bytes = 100;
 
 TEST(LinearAllocatorTest, Ctors) {
     LinearAllocator<mem_size_bytes> allocator;
-    const auto& used_bytes = allocator.get_used_bytes();
 
     allocator.allocate(4, alignment);
-    EXPECT_EQ(used_bytes, 4);
+    EXPECT_EQ(allocator.get_used_bytes(), 4);
 
     LinearAllocator<mem_size_bytes> allocator1(std::move(allocator));
-    EXPECT_EQ(used_bytes, 4);
+    EXPECT_EQ(allocator1.get_used_bytes(), 4);
     EXPECT_EQ(allocator1.get_size(), 100);
     EXPECT_EQ(allocator1.get_allocations_count(), 1);
 
-    LinearAllocator<mem_size_bytes> allocator2 = std::move(allocator1); // TODO: вызывается move ctor ((((((((999
-    EXPECT_EQ(used_bytes, 4);
+    // TODO: вызывается move ctor вместо move assign operator. Что я сделал не так?
+    LinearAllocator<mem_size_bytes> allocator2 = std::move(allocator1);
+    //
+    EXPECT_EQ(allocator2.get_used_bytes(), 4);
     EXPECT_EQ(allocator2.get_size(), 100);
     EXPECT_EQ(allocator2.get_allocations_count(), 1);
 }
