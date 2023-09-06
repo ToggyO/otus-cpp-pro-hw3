@@ -1,4 +1,9 @@
 template <typename T, class AllocationStrategy>
+AllocatorAdapter<T, AllocationStrategy>::AllocatorAdapter() noexcept
+        : m_allocation_strategy{AllocationStrategy()}
+{}
+
+template <typename T, class AllocationStrategy>
 AllocatorAdapter<T, AllocationStrategy>::AllocatorAdapter(AllocationStrategy &strategy) noexcept
     : m_allocation_strategy{strategy}
 {}

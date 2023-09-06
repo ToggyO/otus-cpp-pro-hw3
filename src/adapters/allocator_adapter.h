@@ -15,7 +15,7 @@ public:
     template <typename U>
     struct rebind { using other = AllocatorAdapter<U, AllocationStrategy>;  };
 
-    AllocatorAdapter() = delete;
+    AllocatorAdapter() noexcept;
 
     explicit AllocatorAdapter(AllocationStrategy&) noexcept;
 
